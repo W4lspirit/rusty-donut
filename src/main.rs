@@ -11,11 +11,12 @@ const K_2: i32 = 5;
 const RF_1: f32 = R_1 as f32;
 const RF_2: f32 = R_2 as f32;
 const KF_2: f32 = K_2 as f32;
-const SCREEN_WIDTH: i32 = 20;
-const SCREEN_HEIGHT: i32 = 10;
+const SCREEN_WIDTH: i32 = 160;
+const SCREEN_HEIGHT: i32 = 60;
 const HALF_SCREEN_WIDTH: i32 = SCREEN_WIDTH / 2;
 const HALF_SCREEN_HEIGHT: i32 = SCREEN_HEIGHT / 2;
-const K_1: i32 = SCREEN_WIDTH * K_2 * 3 / (8 * (R_1 + R_2));
+
+const K_1: i32 = SCREEN_WIDTH * K_2 * 1 / (8 * (R_1 + R_2));
 const KF_1: f32 = K_1 as f32;
 
 const LUMINANCE_CHAR: [char; 12] = ['.', ',', '-', '~', ':', ';', '=', '!', '*', '#', '$', '@'];
@@ -90,14 +91,12 @@ fn render_frame(a: f32, b: f32) {
             // L ranges from -sqrt(2) to +sqrt(2).  If it's < 0, the surface is pointing away from us, so we won't bother trying to plot it.
             if lum > 0. {
                 if x_p >= SCREEN_WIDTH as f32 {
-                    // todo investigate  projection of x can be outside canvas
-                    //println!("x_KF_1 ooz x|{}*{}*{}|", KF_1, ooz, x);
+                    //projection of y can be outside canvas if K1 is too close (low)
 
                     break;
                 }
                 if y_p >= SCREEN_HEIGHT as f32 {
-                    //todo  investigate projection of y can be outside canvas
-                    //  println!("x_KF_1 ooz y|{}*{}*{}|", KF_1, ooz, y);
+                    //projection of y can be outside canvas if K1 is too close (low)
                     break;
                 }
                 // test against the z-buffer.  larger 1/z means the pixel is closer to the viewer than what's already plotted.
